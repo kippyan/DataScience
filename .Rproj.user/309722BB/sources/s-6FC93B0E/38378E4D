@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1570852725157.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4019890344",
+    "id" : "38378E4D",
+    "lastKnownWriteTime" : 1570852678,
+    "last_content_update" : 1570862176360,
+    "path" : "~/Documentos/Escuela/19fa/DSCI_385/P01/P01.Rmd",
+    "project_path" : "P01.Rmd",
+    "properties" : {
+        "cursorPosition" : "131,0",
+        "scrollLine" : "123"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

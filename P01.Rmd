@@ -1,0 +1,40 @@
+---
+title: "New Dehli Weather Portfolio Project"
+author: "Olivia Lund"
+output:
+  html_document:
+    df_print: paged
+---
+This project is an analysis of a dataset of detailed weather records from New Dehli, India, starting in November 1996 and ending in April 2014. This dataset was chosen because of its size and detail, featuring over one hundred thousand entries and over twenty different fields. These data can be used to perform a variety of analyses linking different attributes, for example finding what times of the year are more prone to smog, or if wind direction can be a good indicator for presence of precipitation. 
+
+In order to conduct any effective data analysis, as with any other skilled project, the right tools have to be selected. This project will be using the library TidyVerse because of its extensive data organization and the library GGPlot because of its consice and dynamic visualization options.
+```{R}
+#install.packages("tidyverse")
+library("tidyverse")
+library("dplyr")
+library("ggplot2")
+```
+
+
+```{R}
+survey <- read.csv(file="~/Documentos/Escuela/19fa/DSCI_385/P01/dehliweather.csv",)
+```
+
+
+
+
+For the first deliverable, you will set up your portfolio so that you can publish your work continuously as you make progress. Getting Started (below) will give you directions for doing so. 
+
+Your first deliverable will concentrate on the Discovery and Data Preparation phases in the Data Analytics Life Cycle (see week 1 reading to review). In your R Notebook, you should document your process and provide R code for importing and cleaning your data as well as performing some initial investigation and demonstrating familiarity with the data.
+
+In an Introduction, describe your motivation for choosing the general topic of your portfolio.
+Identify your initial data set that you will be using. The data set should have at least:
+at least 1000 observations
+at least 10 variables
+...of which at least 3 are categorical
+...and at least 7 are continuous
+Describe your source, using critical analysis to assess the quality (and possible limitations) of it
+Document your variables and describe in plain language what they mean and how they are represented
+Document any manipulations you make to clean your data and organize it as Tidy Data as best you can prepare it for data analysis and modeling
+Summarize your data using descriptive statistics, along with visualizations (with accompanying interpretations) that help explore what possible insights you might investigate.
+Finally, describe what research questions you hope to explore in later phases, along with potential social & ethical implications of your work. For help identifying and phrasing research questions, see How to Write a Research Question

@@ -1,0 +1,22 @@
+---
+title: "New Dehli Weather Portfolio Project"
+author: "Olivia Lund"
+output:
+  html_document:
+    df_print: paged
+---
+This project is an analysis of a dataset of detailed weather records from New Dehli, India, starting in November 1996 and ending in April 2014. This dataset was chosen because of the breadth of it, which allows for a variety of analyses. 
+
+
+This project uses tidyverse to handle data importing and wrangling and dplyr for some other cool stuff.
+```{R}
+#install.packages("tidyverse")
+library("tidyverse")
+library("dplyr")
+library("ggplot2")
+```
+
+
+```{R}
+survey <- read.csv(file="~/Documentos/Escuela/19fa/CSCI_385//dehliweather.csv",)
+```

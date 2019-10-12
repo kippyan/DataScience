@@ -1,0 +1,7 @@
+"0","```r
+#install.packages(\"tidyverse\")
+
+survey <- read.csv(\"https://raw.githubusercontent.com/introdsci/MusicSurvey/master/music-survey.csv\")
+preferences <- read.csv(\"https://raw.githubusercontent.com/introdsci/MusicSurvey/master/preferences-survey.csv\")
+
+```"

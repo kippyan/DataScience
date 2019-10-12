@@ -1,0 +1,5 @@
+"0","```r
+?parse_datetime
+survey$time_submitted <- as.POSIXlt(parse_datetime(as.character(survey$time_submitted), format=\"%m/%d/%y %H:%M\"))
+survey$time_submitted[1]$min
+```"

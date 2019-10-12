@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1570853069855.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "1887F3D8",
+    "lastKnownWriteTime" : 1570578024,
+    "last_content_update" : 1570578024,
+    "path" : "~/Documentos/Escuela/19fa/DSCI_385/MusicInsights/Music Insights.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "67,3",
+        "scrollLine" : "60",
+        "source_window_id" : ""
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

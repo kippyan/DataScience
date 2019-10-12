@@ -1,0 +1,7 @@
+"0","```r
+favorite_song<-tibble(pseudonym = survey$pseudonym, favorite_song = survey$favorite_song, favorite_song_artist = survey$favorite_song_artist, favorite_song_link = survey$favorite_song_link)
+colnames(favorite_song)
+```"
+"1","[1] \"pseudonym\"            \"favorite_song\"       
+[3] \"favorite_song_artist\" \"favorite_song_link\"  
+"

@@ -1,0 +1,33 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1570858901084.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "66150882",
+    "lastKnownWriteTime" : 94880842629896,
+    "last_content_update" : 1570858901084,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "FDB5DDAA",
+        "caption" : "weather",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=weather&cache_key=FDB5DDAA",
+        "displayedObservations" : "100990",
+        "environment" : "",
+        "expression" : "weather",
+        "object" : "weather",
+        "preview" : "0",
+        "totalObservations" : "100990",
+        "variables" : "20"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

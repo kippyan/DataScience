@@ -1,0 +1,15 @@
+"0","```r
+person$academic_level<-as_factor(person$academic_level)
+levels(person$academic_level)
+```"
+"1","[1] \"Junior\"    \"Senior\"    \"Sophomore\"
+"
+"0","```r
+person$academic_major<-as_factor(person$academic_major)
+levels(person$academic_major)[levels(person$academic_major) == \"Computer  Engineering \"] <- \"Computer Engineering\"
+levels(person$academic_major)[levels(person$academic_major) == \"Computer information systems\"] <- \"Computer Information Systems\"
+levels(person$academic_major)
+```"
+"1","[1] \"Computer Engineering \"        \"Computer Information Systems\"
+[3] \"Computer Science\"             \"Math\"                        
+"

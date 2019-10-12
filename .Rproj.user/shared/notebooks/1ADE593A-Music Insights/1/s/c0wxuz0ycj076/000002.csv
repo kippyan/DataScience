@@ -1,0 +1,8 @@
+"0","```r
+person<-tibble(pseudonym_generator = survey$pseudonym_generator,  pseudonym = survey$pseudonym, sex = survey$sex, academic_major = survey$academic_major, academic_level = survey$academic_level, year_born = survey$year_born)
+colnames(person)
+```"
+"1","[1] \"pseudonym_generator\" \"pseudonym\"          
+[3] \"sex\"                 \"academic_major\"     
+[5] \"academic_level\"      \"year_born\"          
+"

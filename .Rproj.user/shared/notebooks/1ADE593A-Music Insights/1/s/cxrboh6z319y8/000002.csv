@@ -1,0 +1,5 @@
+"0","```r
+colnames(preferences)[colnames(preferences)==\"What.was.your.pseudonym.\"]<-\"pseudonym\"
+preferences$Timestamp <- NULL
+ratings <- gather(preferences, song_name, rating, \"X40.crew.Not.Enough\":\"Wheezer.Buddy.Holly\")
+```"
