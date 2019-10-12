@@ -124,28 +124,11 @@ wind_average_speed
   
 
 
-Now that we have looked at our data, we can begin to modify it and clean it up.
+Now that we have looked at our data, we can modify it and clean it up.
 ```{R}
 weather <- subset(weather, select = -c(any_snow, any_hail, any_tornadoes, precipitation))
 ```
-  
 
 
 
-> ggplot(ratings, aes(x=rating, y=pseudonym)) + geom_boxplot()
-
-For the first deliverable, you will set up your portfolio so that you can publish your work continuously as you make progress. Getting Started (below) will give you directions for doing so. 
-
-Your first deliverable will concentrate on the Discovery and Data Preparation phases in the Data Analytics Life Cycle (see week 1 reading to review). In your R Notebook, you should document your process and provide R code for importing and cleaning your data as well as performing some initial investigation and demonstrating familiarity with the data.
-
-In an Introduction, describe your motivation for choosing the general topic of your portfolio.
-Identify your initial data set that you will be using. The data set should have at least:
-at least 1000 observations
-at least 10 variables
-...of which at least 3 are categorical
-...and at least 7 are continuous
-Describe your source, using critical analysis to assess the quality (and possible limitations) of it
-Document your variables and describe in plain language what they mean and how they are represented
-Document any manipulations you make to clean your data and organize it as Tidy Data as best you can prepare it for data analysis and modeling
-Summarize your data using descriptive statistics, along with visualizations (with accompanying interpretations) that help explore what possible insights you might investigate.
-Finally, describe what research questions you hope to explore in later phases, along with potential social & ethical implications of your work. For help identifying and phrasing research questions, see How to Write a Research Question
+This project holds a lot of potential for identifying relationships between many different aspects of the climate of New Delhi over the past twenty years, and displaying the power of Data Science in the process.
