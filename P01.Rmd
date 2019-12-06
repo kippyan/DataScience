@@ -1,10 +1,10 @@
 ---
 title: "New Dehli Weather Portfolio Project"
 author: "Olivia Lund"
-output:
-  html_document:
-    df_print: paged
+output: html_document
+df_print: paged
 ---
+
 This project is an analysis of a dataset of detailed weather records from New Dehli, India, starting in November 1996 and ending in April 2014. This dataset was chosen because of its size and detail, featuring over one hundred thousand entries and over twenty different fields. These data can be used to perform a variety of analyses linking different attributes, for example finding what times of the year are more prone to smog, or if wind direction can be a good indicator for presence of precipitation. 
 
 Before being able to conduct any effective data analysis, as with any other skilled project, the right tools have to be selected. This project will be using the library TidyVerse because of its extensive data organization and the library GGPlot because of its consice and dynamic visualization options.
@@ -15,7 +15,7 @@ library("ggplot2")
 
 In order to read and modify the dataset, it first has to be read into this workspace, done here via local filepath. This data is sourced from user mahirkukreja who posted it to kaggle.com on the page https://www.kaggle.com/mahirkukreja/delhi-weather-data/. 
 ```{R}
-weather <- read.csv(file="~/Documentos/Escuela/19fa/DSCI_385/P01/dehliweather.csv",)
+weather <- read.csv(file="https://raw.githubusercontent.com/kippyan/DataScience/master/dehliweather.csv",)
 ```
 
  [1] "datetime_utc" "X_conds"      "X_dewptm"    
@@ -127,8 +127,47 @@ wind_average_speed
 Now that we have looked at our data, we can modify it and clean it up.
 ```{R}
 weather <- subset(weather, select = -c(any_snow, any_hail, any_tornadoes, precipitation))
+weather <- subset(weather, !is.na(weather$heat_index))
+#weather <- subset(weather, !is.na(weather$wind_chill))
+#weather <- subset(weather, !is.na(weather$wind_gust_speed))
+
+weather <- subset(weather, !(weather$air_pressure == -9999))
+weather$datetime_utc[1]
 ```
 
 
+
+To make the data easier to work with and combine with other datasets, we can first parse the date and time into R's datetime format, and then break it up into a column for date and a column for time. 
+```{R}
+weather$time = weather$datetime_utc
+weather <- weather[,c(1,17,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)]
+weather$time <- strsplit(as.character(weather$time),"-")
+weather$time <- sapply(weather$time, function(time){ return(time[2]) })
+weather$time <- parse_time(as.character(weather$time), format = "%H:%M")
+head(weather$time)
+```
+#Unfortunately, this appears to only be capable of producing datetime objects with the default date, so we might as well just keep a datetime object instead, and use this new column as a date column, since using date will be useful in the future.
+
+```{R}
+weather$date = weather$datetime_utc
+weather <- weather[,c(1,2,18,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17)]
+weather$date <- strsplit(as.character(weather$datetime_utc),"-")
+weather$date <- sapply(weather$date, function(date){ return(date[1]) })
+weather$date <- parse_date(as.character(weather$date), format = "%Y%m%d")
+head(weather$date)
+```
+And as we can see, the date column has been created correctly. 
+Now, we can go ahead and parse the datetime_utc column into an R datetime object
+```{R}
+weather$datetime_utc <- as.POSIXct(parse_datetime(as.character(weather$datetime_utc), format = "%Y%m%d-%H:%M"))
+head(weather$datetime_utc)
+```
+
+```{R}
+dailyweather <- weather %>% arrange(date, time) %>% group_by(date) %>% slice(1)
+
+```
+
+Most of the major changes are now out of the way for exploring the dataset, and this project is concluded.
 
 This project holds a lot of potential for identifying relationships between many different aspects of the climate of New Delhi over the past twenty years, and displaying the power of Data Science in the process.
