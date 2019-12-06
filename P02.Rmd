@@ -1,0 +1,116 @@
+---
+title: "Music Insights 2"
+author: "Olivia Lund"
+output: html_document
+df_print: paged
+---
+
+This project is a continuation of the analysis of the New Delhi weather dataset from part 1. The purpose of this second part is to design a model that identifies relationships between the data and is capable of producing a meaningful or interesting result, and to build that model by training it with data. This project will also feature the introduction of an additional data source, in this case, a spreadsheet of data collected by the National Environmental Engineering Research Institute of India on the smog in New Delhi during the year 2012. This additional data will lend deeper insight into the weather of the city by establishing the baseline air conditions. Being able to accurately predict the weather and air quality in a city is extremely useful for reasons of health. With an accurate prediction of conditions, people will be able to make better informed decisions about when they should exercise or leave the house to prevent complications like heatstroke or respiratory illness.
+
+As always with any good data analysis, the right tools have to be selected first. This project introduces several new packages. The most important addition is caret, which specializes in predictive modeling using machine learning to train a model on a portion of the dataset and allows for testing that model using the rest of the dataset.
+```{R, results='hide', message=FALSE}
+  include <- function(library_name){
+    if( !(library_name %in% installed.packages()) )
+      install.packages(library_name) 
+    library(library_name, character.only=TRUE)
+  }
+include("tidyverse")
+include("caret")
+include("dplyr")
+include("knitr")
+include("tidyr")
+```
+With the primary dataset at the ready, we can now take our new tools and make use of them.
+
+We begin where we left off last time, by passing in all of the data from P01 with all of the changes made to it from the previous deliverable. This ensures that no redundant work needs to be done to organize the data. 
+```{r echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, results='hide'}
+purl("P01.Rmd", output = "P01.r") # produces r source from rmd
+source("P01.r") # executes the source
+```
+
+The database used previously in this project has a column containing air conditions, however it's a categorical variable that can take any one of the values below:
+```{R}
+levels(weather$air_condition)
+```
+This is not nearly detailed enough for a detailed prediciton of conditions. To remedy this, we employ the use of another dataset focused specifically on air quality.
+
+This spreadsheet is data taken from the National Environmental Engineering Research Institute of India and contains data detailing the smog in New Delhi during the year 2012. The spreadsheet was downloaded from https://data.gov.in/resources/location-wise-monthly-ambient-air-quality-delhi-year-2001. 
+```{R}
+smog <- read.csv(file="cpcb_dly_aq_delhi-2001.csv", header=TRUE, sep=",")
+head(smog)
+```
+The important parts of this dataset are
+Sampling.Date - the date during when the sample was taken
+SO2 - the air concentration of the toxin sulfur dioxide (SO2) in micrograms per cubic meter
+NO2 - the air concentration of the toxin nitrous oxide (NO2) in micrograms per cubic meter
+SPM - the air concentration of suspended particulate matter (SPM) in micrograms per cubic meter
+
+In addition, it contains the sourcing of each data point detailing the agency, monitoring station, station code, and city. Because this is the same for each of these points, we can go ahead and remove several of these unimportant columns.
+```{R}
+smog <- subset(smog, select = -c(Stn.Code, State, City.Town.Village.Area, Agency, Type.of.Location, RSPM.PM10))
+```
+
+Next, we can process the time as a datetime object to make it easier to work with in R
+```{R}
+smog$Sampling.Date <- parse_date(as.character(smog$Sampling.Date), format = "%B - M%m%Y")
+```
+
+Finally, we can rename each of the columns in the spreadsheet to the more consistent naming convention we established with the database in the last report
+```{R}
+colnames(smog)[colnames(smog)=="Sampling.Date"]<-"sample_date"
+colnames(smog)[colnames(smog)=="RSPM.PM10"]<-"RSPM_PM10"
+colnames(smog)
+```
+Now the spreadsheet is tidied up and ready to be analyzed.
+
+
+This portion of the project will focus on developing a model that is capable of predicting the average temperature of a given day.
+
+We have two significant collections of tidied data that are ready for analysis. To make them more useful, we can combine them together with a join operation.
+```{R}
+
+delhidata = inner_join(dailyweather, smog, c("date" = "sample_date"))
+head(delhidata)
+```
+Unfortunately, this reduces the two datasets, one of which had over one hundred thousand observations, to a mere 64. This will still be adequate to do the analysis, but could be a lot better.
+
+Before building a predictive model, the dataset has to be partitioned into a larger training set and a smaller testing set. For the purposes of this project using 75% of the data for the former and 25% for the latter will be adequate.
+```{R}
+#weather<-as.data.frame(table(unlist(weather)))
+sample_selection <- createDataPartition(delhidata$SO2, p = 0.75, list = FALSE)
+train <- delhidata[sample_selection, ]
+test <- delhidata[-sample_selection, ]
+```
+
+
+Next, we can gain insight about the ways that one of the variables affects another by seeing how well they correlate. 
+One of the most effective ways of gathering insight about the change in a variable is by seeing how well it correlates with another one. In this case, we're seeing how well the target variable, birth_year, correlates with every other variable. A larger value means a higher correlation.
+```{R}
+submission_model <- lm(data=train, formula = delhidata$SO2 
+                       ~ delhidata$heat_index
+                       + delhidata$air_pressure
+                       + delhidata$air_condition
+                       + delhidata$dew_point
+                       + delhidata$wind_angle
+                       + delhidata$wind_average_speed 
+                       + delhidata$NO2
+                       )
+summary(submission_model)
+```
+As we can see from these results, none of the variables correlate exceptionally well, with air condition and heat index being the strongest correlations. It's worth noting that air condition(smoke) has a positive correlation with the temperature, and heat index has a negative correlation. It stands to reasin intuitively that air condition being smoke results in a higher concentration of SO2 than other air conditions.
+
+Now, we can use the predictive model we trained on 75% of the data earlier to make a prediction for the SO2 concentration of the other 25%. The first 10 of these data points has been printed out. 
+```{R}
+predictions <- submission_model %>% predict(test)
+head(predictions, n=10)
+#as.Date(predictions,origin = "1960-10-01")
+```
+These predictions are all well within normal ranges of the data, meaning that the model is producing reasonable results, which is a really good sign. The actual data that has been predicted can be seen here:
+```{R}
+head(delhidata$SO2, n=10)
+```
+From this we can see that the model is far from a perfect predictor, and doesn't even seem to follow the same trends that the original data does, however the results are still within a very reasonable range of error.
+
+
+The biggest hurdles for getting this project to work was joining the two sets of data on time. R was very finnicky about this and it took some help from both Dr. Edward Roualdes and Dr. Robin Donnatello to figure it out and finally get the join to work. 
+
