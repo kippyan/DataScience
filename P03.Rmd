@@ -17,15 +17,61 @@ Just like always, we have to select the correct tools for the operation. These a
 include("tidyverse")
 #include("caret")
 #include("dplyr")
-#include("knitr")
+include("knitr")
 #include("tidyr")
 ```
 
-The first part of this assignment is the edits of the first and second parts of the project. 
+
+The first goal of this part of the project is the edits of the first and second parts of the project. 
+
+My classmate Asheela left several helpful issues in my repository for the first portion of the project:
+1. Change the code for loading the dataset from using the entire filepath within my local directory to  using the current directory as a reference.
+2. Make the code in general more readable by using R markup syntax. She specifies line 54, but I'm generalizing this to the entire project.
+3. Add visuals to help readers understand the data more intuitively
+
+My classmate Andrew left an issue for the first portion of the project, about how the output filename in the yml header was incorrect. In addition, he wrote a peer review summary that offers many points I could improve on:
+1. The two sources of data have been shrunk enormously by inner-joining them to produce the final model and remedying this would be very helpful for the accuracy of the model
+2. Adding visuals could help with communicating details of the project to the reader
+3. The concluding remarks are unfortunately vague 
+
+These two sources of feedback have helped drive further work on the prior section of the project.  
+To address Asheela's advice,  
+1. I corrected the filepath as necessary in P01
+2. I used R markdown syntax to bullet and indent the lists in P01
+3. I added some graphs to the end of P01
+To address Andrew's advice, 
+1. 
+2. I added visuals to project 1 that should be sufficient
+3. 
 
 Once again, we begin where we left off by passing in all of the data from P02 with all of the changes made to it from the previous deliverables. This ensures that no redundant work needs to be done to organize the data. 
 ```{r echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, results='hide'}
 purl("P02.Rmd", output = "P02.r") # produces r source from rmd
 source("P02.r") # executes the source
 ```
+
+#### Project Data
+
+This project resulted in the production of a table of readings of weather and air quality. The first few rows are shown below:
+```{R}
+delhidata
+```
+
+
+#### Operationalization
+
+The goal of this project was to explore trends in weather patterns in New Delhi in order to be able to use the model as a predictor for the weather. As the reader can see, undergoing that has been much more involved than it might sound. The primary application of this work would be to provide an accurate forecast of the weather. The second portion of the project adds data on pollutants, so this would ideally result in a predictor of the pollution in the air at any given time of year. Generally speaking, what this should produce is a model that can forecast the weather and pollution within the city.
+
+Operationalizing this project would likely take the form of using the resultant predictive model as an engine for predicting the weather and air quality at any given time. Any online or television weather service could display the results of this model for the current time period to the public. 
+
+Barring the fact that , there are other potential issues with operationalizing this project as well:
+
+* The original data in the model that combines air quality and weather are very small. It's possible that it could be salvaged with strategic imputation of the missing values, but this would have the same issue as the final data model in general of making a predictive model with very few data.
+* The model isn't very accurate as a predictor. The results from the weather table in P02 were within the scope of correct results, but they were still over 20% off, which would be completely unacceptable as an actual forecast.
+* The weather data is taken from only one location in the city. New Delhi is a rather small city, with about half the geographic area of Chico, but it's still possible for there to be bias in the weather reports by not cross-referencing them with another location. 
+* The weather-prediction algorithms that are in use today are far beyond the complexity and accuracy of anything this project is capable of. Weather forecasting technology has gone through shocking advancements throughout the last few decades, and incorporates recent findings in artificial intelligence and chaos theory that would be very hard to replicate in R for a first-semester data science student.
+
+With all this in mind, I have nonetheless managed to accomplish a great deal in this project, and consider it a success.
+
+
 

@@ -13,7 +13,7 @@ As always with any good data analysis, the right tools have to be selected first
     if( !(library_name %in% installed.packages()) )
       install.packages(library_name) 
     library(library_name, character.only=TRUE)
-  }
+  } 
 include("tidyverse")
 include("caret")
 include("dplyr")

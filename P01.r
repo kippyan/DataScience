@@ -5,6 +5,7 @@ library("ggplot2")
 
 ## ------------------------------------------------------------------------------------------------
 weather <- read.csv(file="https://raw.githubusercontent.com/kippyan/DataScience/master/dehliweather.csv",)
+colnames(weather)
 
 
 ## ------------------------------------------------------------------------------------------------
@@ -66,5 +67,13 @@ head(weather$datetime_utc)
 
 ## ------------------------------------------------------------------------------------------------
 dailyweather <- weather %>% arrange(date, time) %>% group_by(date) %>% slice(1)
+head(dailyweather$datetime_utc)
 
+
+## ------------------------------------------------------------------------------------------------
+ggplot(dailyweather, aes(date, temperature)) + geom_col()
+
+
+## ------------------------------------------------------------------------------------------------
+ggplot(dailyweather, aes(as.numeric(format(dailyweather$date, "%m")), temperature)) + geom_col()
 

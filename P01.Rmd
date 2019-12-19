@@ -121,11 +121,34 @@ weather$datetime_utc <- as.POSIXct(parse_datetime(as.character(weather$datetime_
 head(weather$datetime_utc)
 ```
 
+
 ```{R}
 dailyweather <- weather %>% arrange(date, time) %>% group_by(date) %>% slice(1)
-
+head(dailyweather$datetime_utc)
 ```
 
-Most of the major changes are now out of the way for exploring the dataset, and this project is concluded.
 
-This project holds a lot of potential for identifying relationships between many different aspects of the climate of New Delhi over the past twenty years, and displaying the power of Data Science in the process.
+Most of the major changes are now out of the way for exploring the dataset, and we can now begin with visualization.
+
+To begin, a simple graph of temperature against date, to see if there are any appreciable effects over time.
+```{R}
+ggplot(dailyweather, aes(date, temperature)) + geom_col()
+```
+If there are any appreciable changes in overall temperature over the years, it's very difficult to see. This graph best illustrates the large gap in the data. 
+
+It would be very interesting to see a visualization of various statistics by month over the course of a year, however it appears quite difficult in R, which vectorizes attributes of the data frame in ways that can be hard to deal with In this case, it's summing all of the temperatures in that month over the course of an entire year. 
+```{R}
+ggplot(dailyweather, aes(as.numeric(format(dailyweather$date, "%m")), temperature)) + geom_col()
+```
+It's not very helpful to have a graph that prints the sum of all daily temperatures in each month. 
+
+
+To look at a specific year, we can do the following:
+```{R}
+dailyweatheryear = subset(dailyweather, format.Date(date, "%Y") =="2001" )
+ggplot(dailyweatheryear, aes(as.numeric(format(dailyweatheryear$date, "%m")), temperature)) + geom_point() + labs(x = "month")
+```
+This graphic is much less impressive but till communicates the temperature correctly. The temperature reaches higher levels during a portion of the year, as one would expect.
+
+
+This project holds a lot of potential for identifying relationships between many different aspects of the climate of New Delhi at various points throughout the past twenty years, and displaying the power of Data Science in the process.
