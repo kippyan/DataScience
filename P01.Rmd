@@ -1,7 +1,8 @@
 ---
 title: "New Dehli Weather Portfolio Project"
 author: "Olivia Lund"
-output: html_document
+output: 
+
 df_print: paged
 ---
 
@@ -16,17 +17,10 @@ library("ggplot2")
 In order to read and modify the dataset, it first has to be read into this workspace, done here via local filepath. This data is sourced from user mahirkukreja who posted it to kaggle.com on the page https://www.kaggle.com/mahirkukreja/delhi-weather-data/. 
 ```{R}
 weather <- read.csv(file="https://raw.githubusercontent.com/kippyan/DataScience/master/dehliweather.csv",)
+colnames(weather)
 ```
 
- [1] "datetime_utc" "X_conds"      "X_dewptm"    
- [4] "X_fog"        "X_hail"       "X_heatindexm"
- [7] "X_hum"        "X_precipm"    "X_pressurem" 
-[10] "X_rain"       "X_snow"       "X_tempm"     
-[13] "X_thunder"    "X_tornado"    "X_vism"      
-[16] "X_wdird"      "X_wdire"      "X_wgustm"    
-[19] "X_windchillm" "X_wspdm"     
-
-The initial column labels of the dataset were copied and pasted here from a terminal output. If the terminal output was shown instead, they could be updated as the dataset is changed. This shows that the original label format is strange and confusing at times, and uses strange or arbitrary notations and abbreviations. In order to help make the dataset tidy and readable, some of these names will be changed to be more clear:
+This readout of the column labels shows that the original label format is strange and confusing at times, and uses strange or arbitrary notations and abbreviations. In order to help make the dataset tidy and readable, some of these names will be changed to be more clear:
 ```{R}
 colnames(weather)[colnames(weather)=="datetime_utc"]<-"datetime_utc"
 colnames(weather)[colnames(weather)=="X_conds"]<-"air_condition"
@@ -51,78 +45,42 @@ colnames(weather)[colnames(weather)=="X_wspdm"]<-"wind_average_speed"
 head(weather, n =5)
 ```
 
-These data labels make the data easier to analyze by clearly describing what they represent. It requires no experience with data sience to understand what each of these values is generally trying to say. Specifics on each field will be explained below, which will give us an idea what fields warrant further changes:
+These data labels make the data easier to analyze by clearly describing what they represent. 
+It requires no experience with data sience to understand what each of these values is generally trying to say. 
 
-datetime_utc
-  This is simply the date and time of day using the Coordinated Universal Time system. It is continuous and should be changed to the date format built into R.
-  
-air_condition
-  This field contains the primary air condition at the time of the reading. It is a categorical form variable that can take one of many different types of values. Here are the first ten encountered in the list:
- [2] Clear                        
- [3] Haze                         
- [4] Unknown                      
- [5] Scattered Clouds             
- [6] Shallow Fog                  
- [7] Mostly Cloudy                
- [8] Fog                          
- [9] Partly Cloudy                
-[10] Patches of Fog               
+Specifics on each field will be explained below, which will give us an idea what fields warrant further changes:  
 
-dew_point
-  This is the dew point at the current time, which is the temperature at which dew will form, given the current temperature and pressure conditions. It is a decimal with one point of precision.
+* datetime_utc: This is simply the date and time of day using the Coordinated Universal Time system. It is continuous and should be changed to the date format built into R.
+* air_condition: This field contains the primary air condition at the time of the reading. It is a categorical form variable that can take one of many different types of values. Here are the first ten encountered in the list:
+    + [1] Blowing Sand  
+    + [2] Clear                 
+    + [3] Haze  
+    + [4] Unknown  
+    + [5] Scattered Clouds  
+    + [6] Shallow Fog  
+    + [7] Mostly Cloudy  
+    + [8] Fog  
+    + [9] Partly Cloudy  
+    + [10] Patches of Fog  
+* dew_point: This is the dew point at the current time, which is the temperature at which dew will form, given the current temperature and pressure conditions. It is a decimal with one point of precision.  
+* any_fog: This attribute represents whether or not there currently is fog, represented as a boolean value.  
+* any_hail: This is a boolean attribute representing if there currently is hail. There are no data points during which it was hailing, making this a prime candidate for removal.  
+* heat_index: This is a continuous number variable representing the current heat index, which takes into account humidity to more accurately represent percieved temperature.  
+* humidity: This is a continuous decimal number variable that represents the current humidity.  
+* precipitiaton: All entries for this value contain missing entries, making it a prime candidate for removal.  
+* air_pressure: This value represents air pressure. The values are all around 1000, which isn't in a reasonable range for any of the most common units, but this variable could still be kept around to compare relative air pressure within the dataset.  
+* any_rain: A boolean value expressing the presence of rain.  
+* any_snow: A boolean value expressing the presence of snow. Only true for one single reading in May of 2014. Being virtually empty makes it a candidate for removal.  
+* temperature: A decimal number representing the current temperature in centigrade.  
+* any_thunder: A boolean value expressing the presence of thunder.  
+* any_tornadoes: A boolean value expressing the presence of tornadoes. Only true for two entries, one during August of 1999, and one during February of 2007. Curiously, snow is less common in New Delhi than tornadoes. Because this is mostly empty, it is a candidate for deletion.  
+* visibility: A decimal number representing the current visibility, in km.  
+* wind_angle: An integer representing the degrees to the right of north that the wind is blowing.  
+* wind_direction: A string representing the direction of the wind in 3-letter cardinal direction combinations.  
+* wind_gust_speed: A decimal representing the max speed in km/hr that the wind is blowing in periods of fluctuation.  
+* wind_chill: An integer representing the apparent temperature due to the speed of the wind in centigrade.  
+* wind_average_speed: A decimal representing the current average speed that the wind is going.  
   
-any_fog
-  This attribute represents whether or not there currently is fog, represented as a boolean value.
-  
-any_hail
-  This is a boolean attribute representing if there currently is hail. There are no data points during which it was hailing, making this a prime candidate for removal.
-  
-heat_index
-  This is a continuous number variable representing the current heat index, which takes into account humidity to more accurately represent percieved temperature.
-
-humidity
-  This is a continuous decimal number variable that represents the current humidity.
-  
-precipitiaton
-  All entries for this value contain missing entries, making it a prime candidate for removal.
-  
-air_pressure
-  This value represents air pressure. The values are all around 1000, which isn't in a reasonable range for any of the most common units, but this variable could still be kept around to compare relative air pressure within the dataset. 
-  
-any_rain
-  A boolean value expressing the presence of rain.
-  
-any_snow
-  A boolean value expressing the presence of snow. Only true for one single reading in May of 2014. Being virtually empty makes it a candidate for removal.
-  
-temperature
-  A decimal number representing the current temperature in centigrade.
-
-any_thunder
-  A boolean value expressing the presence of thunder.
-  
-any_tornadoes
-  A boolean value expressing the presence of tornadoes. Only true for two entries, one during August of 1999, and one during February of 2007. Curiously, snow is less common in New Delhi than tornadoes. Because this is mostly empty, it is a candidate for deletion.
-  
-visibility
-  A decimal number representing the current visibility, in km.
-  
-wind_angle
-  An integer representing the degrees to the right of north that the wind is blowing.
-
-wind_direction
-  A string representing the direction of the wind in 3-letter cardinal direction combinations.
-  
-wind_gust_speed
-  A decimal representing the max speed in km/hr that the wind is blowing in periods of fluctuation.
-  
-wind_chill
-  An integer representing the apparent temperature due to the speed of the wind in centigrade.
-  
-wind_average_speed
-  A decimal representing the current average speed that the wind is going.
-  
-
 
 Now that we have looked at our data, we can modify it and clean it up.
 ```{R}
@@ -146,7 +104,7 @@ weather$time <- sapply(weather$time, function(time){ return(time[2]) })
 weather$time <- parse_time(as.character(weather$time), format = "%H:%M")
 head(weather$time)
 ```
-#Unfortunately, this appears to only be capable of producing datetime objects with the default date, so we might as well just keep a datetime object instead, and use this new column as a date column, since using date will be useful in the future.
+Unfortunately, this appears to only be capable of producing datetime objects with the default date, so we might as well just keep a datetime object instead, and use this new column as a date column, since using date will be useful in the future.
 
 ```{R}
 weather$date = weather$datetime_utc
