@@ -1,7 +1,10 @@
 # redundant code files
 *.r
 
-# compiled project files
-*.pdf
+# compiled web files
+*.css
 *.html
 *.js
+
+# other files
+*.pdf
