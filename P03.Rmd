@@ -38,11 +38,13 @@ These two sources of feedback have helped drive further work on the prior sectio
 To address Asheela's advice,  
 1. I corrected the filepath as necessary in P01
 2. I used R markdown syntax to bullet and indent the lists in P01
-3. I added some graphs to the end of P01
+3. I added some visualizations to the end of P01
 To address Andrew's advice, 
-1. 
+1. I was unable to remedy the lack of data with the inner join. I have some specilation about possible options in the conclusion of P02 but I was unable to carry out any of them.
 2. I added visuals to project 1 that should be sufficient
-3. 
+3. I updated the conclusion of P02 to be a more robust and clear summary and explanation of possible further work
+
+This advice was very helpful and has helped to make my project more robust. 
 
 Once again, we begin where we left off by passing in all of the data from P02 with all of the changes made to it from the previous deliverables. This ensures that no redundant work needs to be done to organize the data. 
 ```{r echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, results='hide'}
@@ -57,6 +59,21 @@ This project resulted in the production of a table of readings of weather and ai
 delhidata
 ```
 
+#### Cross-Validation
+
+The data analytics code below is commented out because of the errors it causes.
+```{R}
+#data.frame( R2 = R2(predictions, test$temperature),
+#            RMSE = RMSE(predictions, test$temperature),
+#            MAE = MAE(predictions, test$temperature))
+```
+This code would have produced:
+
+*r^2, a measure of the variance between a prediction and the actual data
+*Root Mean Squares Error, the standard deviation of the differences between the prediction and the actual data
+*Mean Absolute Error, a measure of the absolute difference between two continuous variables.
+
+These data metrics would be a very useful tool for validating the strength of the model produced in this project. More than likely, the results would have looked quite poor, but they would have been helpful for understanding the specifics of the model.
 
 #### Operationalization
 
@@ -64,14 +81,14 @@ The goal of this project was to explore trends in weather patterns in New Delhi 
 
 Operationalizing this project would likely take the form of using the resultant predictive model as an engine for predicting the weather and air quality at any given time. Any online or television weather service could display the results of this model for the current time period to the public. 
 
-Barring the fact that , there are other potential issues with operationalizing this project as well:
+However there are some issues that arise from operationalizing the project this way:
 
 * The original data in the model that combines air quality and weather are very small. It's possible that it could be salvaged with strategic imputation of the missing values, but this would have the same issue as the final data model in general of making a predictive model with very few data.
 * The model isn't very accurate as a predictor. The results from the weather table in P02 were within the scope of correct results, but they were still over 20% off, which would be completely unacceptable as an actual forecast.
 * The weather data is taken from only one location in the city. New Delhi is a rather small city, with about half the geographic area of Chico, but it's still possible for there to be bias in the weather reports by not cross-referencing them with another location. 
-* The weather-prediction algorithms that are in use today are far beyond the complexity and accuracy of anything this project is capable of. Weather forecasting technology has gone through shocking advancements throughout the last few decades, and incorporates recent findings in artificial intelligence and chaos theory that would be very hard to replicate in R for a first-semester data science student.
+* The weather-prediction algorithms that are in use today are far beyond the complexity and accuracy of anything this project is capable of in its current state.
 
-With all this in mind, I have nonetheless managed to accomplish a great deal in this project, and consider it a success.
+With all this in mind, this project has come very far towards its ultimate goals. It hasn't produced the predictive data model that I hoped it would, but it still has a lot of potential to remedy that by other means. What this project shows is the strength of data science and its potential to help society. These kinds of projects have very clear positive potential impacts of implementation in society as a whole. When considering this with potential downsides, they can do quite a lot of good. Finally, through this project, I've learned a lot about data science and will use this knowledge and experience to use it in my data science career.
 
 
 

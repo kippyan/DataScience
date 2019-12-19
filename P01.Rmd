@@ -145,10 +145,16 @@ It's not very helpful to have a graph that prints the sum of all daily temperatu
 
 To look at a specific year, we can do the following:
 ```{R}
-dailyweatheryear = subset(dailyweather, format.Date(date, "%Y") =="2001" )
-ggplot(dailyweatheryear, aes(as.numeric(format(dailyweatheryear$date, "%m")), temperature)) + geom_point() + labs(x = "month")
+tempdata = subset(dailyweather, format.Date(date, "%Y") =="2001" )
+ggplot(tempdata, aes(as.numeric(format(tempdata$date, "%m")), temperature)) + geom_point() + labs(x = "month")
 ```
 This graphic is much less impressive but till communicates the temperature correctly. The temperature reaches higher levels during a portion of the year, as one would expect.
 
+Now, to do the same thing with a specific day across all the years for which data is available:
+```{R}
+tempdata = subset(dailyweather, format.Date(date, "%m") =="04" & format.Date(date, "%d") =="01")
+ggplot(tempdata, aes(as.numeric(format(tempdata$date, "%Y")), temperature)) + geom_path() + labs(x = "Year", y = "Temperature on April 1st")
+```
+This would be very interesting if the data were more dense, but unfortunately it's hard to make any interesting trends from this.
 
 This project holds a lot of potential for identifying relationships between many different aspects of the climate of New Delhi at various points throughout the past twenty years, and displaying the power of Data Science in the process.

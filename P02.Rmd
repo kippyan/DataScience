@@ -111,6 +111,15 @@ head(delhidata$SO2, n=10)
 ```
 From this we can see that the model is far from a perfect predictor, and doesn't even seem to follow the same trends that the original data does, however the results are still within a very reasonable range of error.
 
+This portion of the project demonstrates very well the kinds of analyses that can be done with a data science project. Machine learning and predictive analysis are very powerful tools for many types of computing work, and data science is far from an exception. 
 
-The biggest hurdles for getting this project to work was joining the two sets of data on time. R was very finnicky about this and it took some help from both Dr. Edward Roualdes and Dr. Robin Donnatello to figure it out and finally get the join to work. 
+The biggest hurdles for getting this project to work was joining the two sets of data on time. R was very finnicky about this and it took some help from both Dr. Edward Roualdes and Dr. Robin Donnatello to figure it out and finally get the join to work.
 
+Unfortunately for the context of this assignment, the data prediction model produced isn't very good. It lacks the large variety of data required to make good predictions. Alternative strategies for redoing this work could include:
+
+* left joining weather and smog so that the entire weather dataset would be included and smog would only be included sparsely
+    + Possibly also filling in the remaining smog data using a predictive method
+* redoing the exact same process detailed in this spreadsheet but with all four of the yearly smog data spreadsheets instead of just the one for a single year
+* finding a different dataset for smog in New Delhi with more regular readings over a wider span of time that would remove less of the weather data were the datasets inner-joined
+
+Regardless of the failures, this project still demonstrates the most important parts of its goal, like the application of machine learning to this data science project and the use of an additional dataset to provide a more robust understanding of the subject.
