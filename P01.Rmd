@@ -134,12 +134,14 @@ To begin, a simple graph of temperature against date, to see if there are any ap
 ```{R}
 ggplot(dailyweather, aes(date, temperature)) + geom_col()
 ```
+
 If there are any appreciable changes in overall temperature over the years, it's very difficult to see. This graph best illustrates the large gap in the data. 
 
 It would be very interesting to see a visualization of various statistics by month over the course of a year, however it appears quite difficult in R, which vectorizes attributes of the data frame in ways that can be hard to deal with In this case, it's summing all of the temperatures in that month over the course of an entire year. 
 ```{R}
 ggplot(dailyweather, aes(as.numeric(format(dailyweather$date, "%m")), temperature)) + geom_col()
 ```
+
 It's not very helpful to have a graph that prints the sum of all daily temperatures in each month. 
 
 
@@ -148,6 +150,7 @@ To look at a specific year, we can do the following:
 tempdata = subset(dailyweather, format.Date(date, "%Y") =="2001" )
 ggplot(tempdata, aes(as.numeric(format(tempdata$date, "%m")), temperature)) + geom_point() + labs(x = "month")
 ```
+
 This graphic is much less impressive but till communicates the temperature correctly. The temperature reaches higher levels during a portion of the year, as one would expect.
 
 Now, to do the same thing with a specific day across all the years for which data is available:
@@ -155,6 +158,7 @@ Now, to do the same thing with a specific day across all the years for which dat
 tempdata = subset(dailyweather, format.Date(date, "%m") =="04" & format.Date(date, "%d") =="01")
 ggplot(tempdata, aes(as.numeric(format(tempdata$date, "%Y")), temperature)) + geom_path() + labs(x = "Year", y = "Temperature on April 1st")
 ```
+
 This would be very interesting if the data were more dense, but unfortunately it's hard to make any interesting trends from this.
 
 This project holds a lot of potential for identifying relationships between many different aspects of the climate of New Delhi at various points throughout the past twenty years, and displaying the power of Data Science in the process.
